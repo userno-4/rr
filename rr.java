@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 class Customer {
     private final String customerId;
@@ -101,5 +102,63 @@ public class rr {
         waterAccount.calculateBill();
         waterAccount.generateBill();
         System.out.println("-------------------------");
+
+
+
+        // Seat reservation 
+        Scanner s = new Scanner(System.in);
+
+        int row=5;
+        int col=8;
+
+        String seats[][] = new String[row][col];
+
+        int count = 1;
+        for(int i=0; i<row; i++){
+            for(int j=0; j<col; j++){
+                seats[i][j] = String.valueOf(count++);
+            }
+        }
+
+        while(true){
+            System.out.println("\n-- Current Seat Map --");
+            for(int i=0; i<row; i++){
+                for(int j=0; j<col; j++){
+                    System.out.printf("%-5s", seats[i][j]);
+                }
+                System.out.println();
+            }
+            System.out.print("\nEnter seat number to reserve (or type '0' to exit) : ");
+            String input = s.nextLine();
+
+            if(input.equals("0")){
+                System.out.println("Exiting system. Goodbye!");
+                break;
+            }
+
+            try {
+                int seatNum = Integer.parseInt(input);
+                if(seatNum < 1 || seatNum > 40){
+                    System.out.println("Error: Invalid seat number.please choose between 1 and 49.");
+                    continue;
+                }
+
+                int r = (seatNum-1)/col;
+                int c = (seatNum-1)%col;
+
+                if(seats[r][c].equals("X")){
+                    System.out.println("OK");
+                }else{
+                    seats[r][c] = "X";
+                    System.out.println("Seat sucsessfully reserved");
+                }
+            
+
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter a valid numerical seat number.");
+            }
+
+            
+        }
     }
 }
